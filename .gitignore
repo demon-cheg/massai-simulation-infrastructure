@@ -38,3 +38,17 @@ generated/
 # Local runtime output
 .run/
 artifacts/
+
+
+# Unity-generated IDE files
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.opendb
+*.VC.db
+.vsconfig
