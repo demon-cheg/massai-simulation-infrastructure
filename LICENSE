@@ -1,0 +1,59 @@
+MASSAI NETWORKED SIMULATION INFRASTRUCTURE
+PROPRIETARY EVALUATION LICENSE
+
+Copyright (c) 2026 Dmytro Miroshnyk. All rights reserved.
+
+1. Ownership
+
+The source code, documentation, architecture, configuration, and other original
+materials in this repository (collectively, the "Software") are proprietary to
+Dmytro Miroshnyk, except for third-party materials identified below.
+
+2. Limited Evaluation Permission
+
+You may view the Software and may download, compile, and run an unmodified copy
+solely for personal, non-commercial evaluation of the author's engineering work.
+This permission is limited, revocable, non-exclusive, and non-transferable.
+
+3. Restrictions
+
+Except for the limited permission in Section 2, no permission is granted to:
+
+- copy or reproduce the Software;
+- modify, adapt, translate, or create derivative works from the Software;
+- publish, distribute, sublicense, sell, rent, or otherwise provide the
+  Software or any substantial portion of it to another person;
+- use the Software or its architecture in a commercial, production, client,
+  research, training, or operational system;
+- incorporate the Software into another product, service, repository, dataset,
+  benchmark, or machine-learning training corpus;
+- remove or alter copyright, attribution, or proprietary notices.
+
+Any permission not expressly granted by this license is reserved.
+
+4. GitHub Platform Functionality
+
+If the Software is hosted in a public GitHub repository, use of GitHub features
+is also subject to the GitHub Terms of Service. Platform actions permitted by
+those terms do not grant permission to use the Software outside the limited
+evaluation purpose stated in this license.
+
+5. Third-Party Materials
+
+Third-party libraries, packages, assets, and tools are governed by their own
+licenses. This license applies only to original material owned by Dmytro
+Miroshnyk and grants no rights to third-party material.
+
+6. No Warranty
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, AND NON-INFRINGEMENT. TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE
+AUTHOR SHALL NOT BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING
+FROM THE SOFTWARE OR ITS USE.
+
+7. Additional Permission
+
+For permission beyond personal portfolio evaluation, contact the author through
+the GitHub account associated with this repository.
+

@@ -86,3 +86,13 @@ infra/                          Added with container and cloud deployment
 7. Claims about scale are backed by measurements, not architecture diagrams.
 
 See [architecture](docs/architecture.md), [protocol](docs/protocol.md), and [delivery plan](docs/delivery-plan.md).
+
+## License
+
+Copyright © 2026 Dmytro Miroshnyk. All rights reserved.
+
+This is proprietary, source-available portfolio software, not an open-source
+project. You may inspect, compile, and run an unmodified copy solely to evaluate
+the author's engineering work. Reuse, modification, redistribution, derivative
+works, commercial use, and inclusion in datasets or machine-learning training
+corpora are prohibited. See [LICENSE](LICENSE) for the complete terms.
