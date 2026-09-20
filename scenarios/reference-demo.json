@@ -1,0 +1,25 @@
+{
+  "scenario_id": "reference-demo-v1",
+  "seed": 20250919,
+  "tick_hz": 20,
+  "vehicle": {
+    "vehicle_id": "drone-01",
+    "spawn_enu_m": [0.0, 0.0, 0.0],
+    "heading_deg": 0.0
+  },
+  "inspection_object": {
+    "object_id": "beacon-alpha",
+    "position_enu_m": [12.0, 30.0, 2.0],
+    "semantic_class": "inspection_beacon"
+  },
+  "mission": [
+    {"type": "takeoff", "altitude_m": 10.0},
+    {"type": "navigate", "waypoint_enu_m": [10.0, 24.0, 10.0]},
+    {"type": "observe", "target_object_id": "beacon-alpha", "dwell_seconds": 1.0},
+    {"type": "track", "target_object_id": "beacon-alpha", "desired_range_m": 12.0, "dwell_seconds": 1.0},
+    {"type": "tag_object", "target_object_id": "beacon-alpha", "desired_range_m": 12.0, "dwell_seconds": 1.5},
+    {"type": "return_home"},
+    {"type": "land"}
+  ]
+}
+

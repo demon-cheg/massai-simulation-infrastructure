@@ -1,0 +1,32 @@
+* text=auto
+
+*.cs text eol=lf
+*.py text eol=lf
+*.proto text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.sh text eol=lf
+*.ps1 text eol=lf
+
+# Unity YAML assets must remain text for useful diffs.
+*.asmdef text eol=lf
+*.asset text eol=lf
+*.controller text eol=lf
+*.mat text eol=lf
+*.meta text eol=lf
+*.prefab text eol=lf
+*.unity text eol=lf
+
+# Binary assets.
+*.dll binary
+*.fbx binary
+*.gif binary
+*.jpg binary
+*.jpeg binary
+*.mp3 binary
+*.mp4 binary
+*.ogg binary
+*.png binary
+*.psd binary
+*.wav binary
+

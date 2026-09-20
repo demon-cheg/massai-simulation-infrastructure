@@ -1,0 +1,203 @@
+syntax = "proto3";
+
+package massai.networked_simulation.agent.v1;
+
+option csharp_namespace = "MassAI.NetworkedSimulation.Contracts.Agent.V1";
+
+message ProtocolVersion {
+  uint32 major = 1;
+  uint32 minor = 2;
+}
+
+message AgentHello {
+  ProtocolVersion protocol = 1;
+  string session_id = 2;
+  string agent_id = 3;
+  string requested_vehicle_id = 4;
+  repeated string capabilities = 5;
+}
+
+message RuntimeHello {
+  ProtocolVersion protocol = 1;
+  string session_id = 2;
+  string agent_id = 3;
+  string leased_vehicle_id = 4;
+  string vehicle_profile = 5;
+  repeated SensorDescriptor sensors = 6;
+  uint32 control_deadline_ms = 7;
+}
+
+message SensorDescriptor {
+  string sensor_id = 1;
+  SensorKind kind = 2;
+  double nominal_rate_hz = 3;
+  string frame_id = 4;
+}
+
+enum SensorKind {
+  SENSOR_KIND_UNSPECIFIED = 0;
+  SENSOR_KIND_VEHICLE_STATE = 1;
+  SENSOR_KIND_CAMERA_RGB = 2;
+  SENSOR_KIND_TARGET_OBSERVATION = 3;
+}
+
+message StreamEnvelope {
+  oneof payload {
+    SensorPacket sensor_packet = 1;
+    MissionCommand mission_command = 2;
+    ControlLease control_lease = 3;
+    ControlSetpoint control_setpoint = 4;
+    MissionStatus mission_status = 5;
+    Heartbeat heartbeat = 6;
+  }
+}
+
+message MessageHeader {
+  string session_id = 1;
+  string agent_id = 2;
+  string vehicle_id = 3;
+  uint64 sequence = 4;
+  uint64 simulation_tick = 5;
+  int64 simulation_time_ns = 6;
+  int64 monotonic_time_ns = 7;
+}
+
+message Vector3d {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+message VehicleState {
+  Vector3d position_enu_m = 1;
+  Vector3d velocity_enu_mps = 2;
+  double heading_deg = 3;
+  double yaw_rate_degps = 4;
+  bool grounded = 5;
+  double battery_fraction = 6;
+  double camera_pitch_deg = 7;
+}
+
+message CameraFrameRef {
+  string sensor_id = 1;
+  uint64 frame_sequence = 2;
+  uint32 width = 3;
+  uint32 height = 4;
+  PixelFormat pixel_format = 5;
+  string transport_uri = 6;
+  uint64 byte_length = 7;
+}
+
+enum PixelFormat {
+  PIXEL_FORMAT_UNSPECIFIED = 0;
+  PIXEL_FORMAT_RGB24 = 1;
+  PIXEL_FORMAT_RGBA32 = 2;
+  PIXEL_FORMAT_JPEG = 3;
+}
+
+message TargetObservation {
+  string sensor_id = 1;
+  string object_id = 2;
+  string semantic_class = 3;
+  PerceptionSource source = 4;
+  double center_x_normalized = 5;
+  double center_y_normalized = 6;
+  double width_normalized = 7;
+  double height_normalized = 8;
+  double confidence = 9;
+  optional double simulated_range_m = 10;
+  optional Vector3d estimated_position_enu_m = 11;
+  optional double position_error_stddev_m = 12;
+}
+
+enum PerceptionSource {
+  PERCEPTION_SOURCE_UNSPECIFIED = 0;
+  PERCEPTION_SOURCE_GROUND_TRUTH_ADAPTER = 1;
+  PERCEPTION_SOURCE_MODEL = 2;
+}
+
+message SensorPacket {
+  MessageHeader header = 1;
+  VehicleState vehicle = 2;
+  repeated CameraFrameRef camera_frames = 3;
+  repeated TargetObservation targets = 4;
+}
+
+enum MissionType {
+  MISSION_TYPE_UNSPECIFIED = 0;
+  MISSION_TYPE_HOLD = 1;
+  MISSION_TYPE_TAKEOFF = 2;
+  MISSION_TYPE_NAVIGATE = 3;
+  MISSION_TYPE_OBSERVE = 4;
+  MISSION_TYPE_TRACK = 5;
+  MISSION_TYPE_TAG_OBJECT = 6;
+  MISSION_TYPE_RETURN_HOME = 7;
+  MISSION_TYPE_LAND = 8;
+}
+
+message MissionCommand {
+  MessageHeader header = 1;
+  string command_id = 2;
+  MissionType type = 3;
+  optional Vector3d waypoint_enu_m = 4;
+  optional double target_altitude_m = 5;
+  optional string target_object_id = 6;
+  optional double desired_range_m = 7;
+  optional double dwell_seconds = 8;
+  uint64 valid_until_tick = 9;
+}
+
+message ControlSetpoint {
+  MessageHeader header = 1;
+  Vector3d desired_velocity_enu_mps = 2;
+  double desired_yaw_rate_degps = 3;
+  optional double target_altitude_m = 4;
+  uint64 valid_until_tick = 5;
+  ControlSource source = 6;
+  double desired_camera_pitch_rate_degps = 7;
+}
+
+enum ControlSource {
+  CONTROL_SOURCE_UNSPECIFIED = 0;
+  CONTROL_SOURCE_AUTONOMY = 1;
+  CONTROL_SOURCE_OPERATOR = 2;
+  CONTROL_SOURCE_FAILSAFE = 3;
+}
+
+message ControlLease {
+  MessageHeader header = 1;
+  string lease_id = 2;
+  uint64 lease_epoch = 3;
+  ControlSource holder = 4;
+  uint64 valid_until_tick = 5;
+}
+
+enum MissionState {
+  MISSION_STATE_UNSPECIFIED = 0;
+  MISSION_STATE_ACCEPTED = 1;
+  MISSION_STATE_RUNNING = 2;
+  MISSION_STATE_SUCCEEDED = 3;
+  MISSION_STATE_FAILED = 4;
+  MISSION_STATE_CANCELLED = 5;
+}
+
+message MissionStatus {
+  MessageHeader header = 1;
+  string command_id = 2;
+  MissionState state = 3;
+  string reason_code = 4;
+  string detail = 5;
+}
+
+message Heartbeat {
+  MessageHeader header = 1;
+  HealthState health = 2;
+  uint32 missed_deadlines = 3;
+}
+
+enum HealthState {
+  HEALTH_STATE_UNSPECIFIED = 0;
+  HEALTH_STATE_READY = 1;
+  HEALTH_STATE_DEGRADED = 2;
+  HEALTH_STATE_FAILED = 3;
+}
